@@ -1,4 +1,4 @@
-        DEVICE ZXSPECTRUMNEXT
+    DEVICE ZXSPECTRUMNEXT
 
 ; System ROM routines
 ROM_PRINT_A   EQU $0010
@@ -14,9 +14,14 @@ SYS_ATTR_P   EQU 23693
 ; System ports
 PORT_FE      EQU $FE
 
+/*
+The frequency code HL for a frequency of f Hz is provided by the formula 437500/f – 30.125.
+The duration code DE for a note with frequency f Hz and duration t seconds is simply f×t.
+*/
+
 ; Music notes and durations
-NOTE_C  EQU 1642
-DUR_01  EQU 26
+NOTE_C  EQU $0106 ;$0105 ; f*t = middle C for 1 sec. = (INT(261.3*1))
+DUR_01  EQU $066A ; $066A ; (derived from 6689/4-30.125).
 
         ORG $8000
 
@@ -74,16 +79,34 @@ PAUSE_0:
         EI ; enable interrupts
         LD BC, 0 ; no timeout for pause
         CALL ROM_PAUSE
+        ;DI ; disable interrupts after pause
 
         ; 90 BEEP 0.1,0 - sound a beep
 BEEP:
-        LD HL, NOTE_C
-        LD DE, DUR_01
+
+        ; Middle C - 261.63 Hz
+        ; DE = duration = frequency * seconds (f*t)
+        ; 1 sec of middle C is f*t = 261.63 * 0,1 ≈ 26 (0x0106)
+        ; HL = pitch = 437500 / f - 30.125 = 437500 / 261.63 - 30.125 ≈ 1642 (0x066A)
+        LD HL, 1642; NOTE_C
+        LD DE, 260; DUR_01
         CALL ROM_BEEPER
 
+/*
+        LD HL, 3642; NOTE_C
+        LD DE, 260; DUR_01
+        CALL ROM_BEEPER
+
+        LD HL, 4642; NOTE_C
+        LD DE, 260; DUR_01
+        CALL ROM_BEEPER
+*/
+        LD BC, 50 ; one second pause
+        CALL ROM_PAUSE
+
 WAIT:
-        ;JR WAIT
-        RET
+        JR WAIT
+        ;RET
 
 TEXT_DB:
         DB "Hello, world!", 13, 255
