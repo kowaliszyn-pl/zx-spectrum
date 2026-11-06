@@ -29,5 +29,19 @@ https://www.jnext.es/
 1. Convert the `HelloWorld.bas` file to `HelloWorld.bas.bin` using the NextBASIC command "export to binary BAS".
 2. Export the .bas.bin file to the emulator using the following command:
 
-`..\..\..\..\8bits\Tools\jNext\jnext.exe --sdcard-file-add HelloWorld.bas.bin --sdcard-file-dest /APPS/MY/HelloWorld.bas`
+`..\..\..\..\8bits\Tools\jNext\jnext.exe --sdcard-file-add HelloWorld.bas.bin --sdcard-file-dest /APPS/MY/HelloWorld.bas --sdcard-file-force`
+
+## Run your first assembly program
+
+1. Compile the `HelloWorldInColors.asm` file using sjasmplus:
+
+`..\..\..\..\8bits\Tools\sjasmplus\sjasmplus HelloWorldInColors.asm`
+
+2. Export the resulting `.nex` file to the emulator using the following command:
+
+`..\..\..\..\8bits\Tools\jNext\jnext.exe --sdcard-file-add HelloWorldInColors.nex --sdcard-file-dest /APPS/MY/HelloWorldInColors.nex --sdcard-file-force`
+
+## Documentation
+
+1. https://worldofspectrum.org/ZXBasicManual/
 

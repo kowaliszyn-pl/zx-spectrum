@@ -1,2 +1,5 @@
 # Ignore binary files generated from NextBASIC export
 *.bin
+
+# Ignore compiled Next files
+*.nex
