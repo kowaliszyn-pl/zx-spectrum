@@ -16,6 +16,7 @@ To compile Z80 assembly code, use the following compiler (download and extract f
 
 1. sjasmplus - Z80 Assembler
 https://github.com/z00m128/sjasmplus
+https://z00m128.github.io/sjasmplus/documentation.html
 
 ## Emulator
 
@@ -44,4 +45,7 @@ https://www.jnext.es/
 ## Documentation
 
 1. https://worldofspectrum.org/ZXBasicManual/
+2. http://www.users.globalnet.co.uk/~jg27paw4/pourri/rom-routines.txt
+- http://www.users.globalnet.co.uk/~jg27paw4/pourri/
+- http://www.users.globalnet.co.uk/~jg27paw4/
 

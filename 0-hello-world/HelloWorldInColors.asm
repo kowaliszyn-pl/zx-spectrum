@@ -72,7 +72,9 @@ PAUSE_0:
 
     ; 90 BEEP 0.1,0 - sound a beep
 BEEP:
-    ; Middle C - 261.63 Hz
+    ; Middle C - 261.63 Hz, period 3.8226 ms (13380 T-states @ 3.5 MHz)
+    ; Output $10 for 6690 T-states and $00 for the remaining 6690 T-states, repeat
+    ; For Spectrum 128k - AY-3-8912 sound chip, the frequency and duration would be set differently
     ; DE = duration = frequency * seconds; 1 sec of middle C is = 261.63 * 1 ≈ 262
     ; HL = pitch = 437500 / frequency - 30.125 = 437500 / 261.63 - 30.125 ≈ 1642
     LD HL, 1642
@@ -92,8 +94,8 @@ PROMPT_DB:
     DB "Press any key...", 13, 255
 
 ; NEX file configuration
-        SAVENEX OPEN "HelloWorldInColors.nex", START, $FF40
-        SAVENEX CORE 3, 0, 0
-        SAVENEX CFG 7, 0, 1, 0
-        SAVENEX AUTO
-        SAVENEX CLOSE
+    SAVENEX OPEN "HelloWorldInColors.nex", START, $FF40
+    SAVENEX CORE 3, 0, 0
+    SAVENEX CFG 7, 0, 1, 0
+    SAVENEX AUTO
+    SAVENEX CLOSE
