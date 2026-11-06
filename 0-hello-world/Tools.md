@@ -24,3 +24,10 @@ Install to run ZX Spectrum Next software on your computer (download and extract 
 1. jNext - ZX Spectrum Next Emulator
 https://www.jnext.es/
 
+## Run your first program
+
+1. Convert the `HelloWorld.bas` file to `HelloWorld.bas.bin` using the NextBASIC command "export to binary BAS".
+2. Export the .bas.bin file to the emulator using the following command:
+
+`..\..\..\..\8bits\Tools\jNext\jnext.exe --sdcard-file-add HelloWorld.bas.bin --sdcard-file-dest /APPS/MY/HelloWorld.bas`
+
