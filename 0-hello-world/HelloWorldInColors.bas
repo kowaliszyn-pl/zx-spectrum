@@ -7,5 +7,7 @@
 70 PRINT "Press any key..."
 80 PAUSE 0
 90 BEEP 0.1,0
-100 REM End of program
-110 STOP
+100 REM Wait for one second before ending
+110 PAUSE 50
+120 REM End of program
+130 STOP
