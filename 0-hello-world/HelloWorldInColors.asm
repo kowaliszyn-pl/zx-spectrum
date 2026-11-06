@@ -1,14 +1,22 @@
         DEVICE ZXSPECTRUMNEXT
 
 ; System ROM routines
-ROM_PRINT_A  EQU $0010
-ROM_CLS      EQU $0D6B
+ROM_PRINT_A   EQU $0010
+ROM_CLS       EQU $0D6B
 ROM_CHAN_OPEN EQU $1601
-ROM_SET_BORDER EQU $22A3
+ROM_PAUSE     EQU $1F3D
+ROM_BEEPER    EQU $03B5
 
 ; System variables
 SYS_BORDCR   EQU 23624
 SYS_ATTR_P   EQU 23693
+
+; System ports
+PORT_FE      EQU $FE
+
+; Music notes and durations
+NOTE_C  EQU 1642
+DUR_01  EQU 26
 
         ORG $8000
 
@@ -18,14 +26,10 @@ START:
         LD A, %00001110
         LD (SYS_ATTR_P), A
 
-        ; BORDER 1 (and lower screen)
-        ;LD A, %00111011
+        ; BORDER 1 (and lower screen) + output to port $FE
         LD (SYS_BORDCR), A
-        ;LD A, 1
-        ;CALL ROM_SET_BORDER
-
         LD A, 1
-        OUT ($FE),A
+        OUT (PORT_FE),A
 
         ; Clear the screen
         ; 20 CLS
@@ -52,10 +56,8 @@ PRINT_NEW_LINE:
         ; 50 PRINT - newline
         LD A, 13  ; ASCII code for carriage return (newline)
         RST ROM_PRINT_A
-        ;RST ROM_PRINT_A
-        ;RST ROM_PRINT_A
 
-        ; 70 PRINT "Press any key to end the program"
+        ; 70 PRINT "Press any key..."
         LD HL, PROMPT_DB
 
 PRINT_PROMPT:
@@ -68,10 +70,20 @@ PRINT_PROMPT:
         JR PRINT_PROMPT
 
 PAUSE_0:
-        ; Wait for a key press
+        ; 80 PAUSE 0 - wait for a key press
+        EI ; enable interrupts
+        LD BC, 0 ; no timeout for pause
+        CALL ROM_PAUSE
+
+        ; 90 BEEP 0.1,0 - sound a beep
+BEEP:
+        LD HL, NOTE_C
+        LD DE, DUR_01
+        CALL ROM_BEEPER
 
 WAIT:
-        JR WAIT
+        ;JR WAIT
+        RET
 
 TEXT_DB:
         DB "Hello, world!", 13, 255
