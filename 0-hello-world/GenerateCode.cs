@@ -17,16 +17,16 @@ List<string> lines = [
     $"50 LET r=USR {address}"
 ];
 
-// DATA instruction line numebr
+// DATA instruction line number
 
-int dataLineNumber = 100;
+int dataLineNumber = (lines.Count + 1) * 10;
 int dataInstructionsPerLine = 8;
 
 // Add data lines for the binary data
 
 for (int i = 0; i < binaryDataLength; i += dataInstructionsPerLine)
 {
-    string line = dataLineNumber + " DATA ";
+    string line = $"{dataLineNumber} DATA ";
     for (int j = 0; j < dataInstructionsPerLine && i + j < binaryDataLength; j++)
     {
         line += binaryData[i + j];
@@ -46,6 +46,5 @@ File.WriteAllLines(outputFile, lines);
 Console.WriteLine($"Generated BASIC code saved to {outputFile}");
 Console.WriteLine($"Binary data length: {binaryDataLength} bytes");
 Console.WriteLine($"Memory address: {address}");
-Console.WriteLine($"Output file: {outputFile}");
 
 // END
