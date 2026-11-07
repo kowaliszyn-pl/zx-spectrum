@@ -16,7 +16,7 @@ PORT_FE      EQU $FE
     ORG $8000
 
 START:
-    ; Set the colors: yellow (6) text on blue (1) background
+    ; Set colors: yellow (6) text on blue (1) background
     ; 10 PAPER 1: INK 6
     LD A, %00001110
     LD (SYS_ATTR_P), A
@@ -35,7 +35,7 @@ START:
     CALL ROM_CHAN_OPEN
 
     ; Display text
-    ; 40 PRINT "Hello, world!"
+    ; 40 PRINT "Hello, world!" + CHR$ 13
     LD HL, TEXT_DB
 
 PRINT_HELLO_WORD:
@@ -52,7 +52,7 @@ PRINT_NEW_LINE:
     LD A, 13  ; ASCII code for carriage return (newline)
     RST ROM_PRINT_A
 
-    ; 70 PRINT "Press any key..."
+    ; 70 PRINT "Press any key..." + CHR$ 13
     LD HL, PROMPT_DB
 
 PRINT_PROMPT:
